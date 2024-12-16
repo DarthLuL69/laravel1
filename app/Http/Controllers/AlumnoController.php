@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
 {
     public function index()
     {
-        return Alumno::all();
+        return DB::table('alumnos')->get();
     }
 
     public function show($id)
     {
-        return Alumno::findOrFail($id);
+        return DB::table('alumnos')->where('id', $id)->first();
     }
 
     public function store(Request $request)
@@ -28,7 +28,8 @@ class AlumnoController extends Controller
             'sexo' => 'nullable|string',
         ]);
 
-        return Alumno::create($validated);
+        DB::table('alumnos')->insert($validated);
+        return response()->json(['message' => 'Alumno created'], 201);
     }
 
     public function update(Request $request, $id)
@@ -42,14 +43,13 @@ class AlumnoController extends Controller
             'sexo' => 'nullable|string',
         ]);
 
-        $alumno = Alumno::findOrFail($id);
-        $alumno->update($validated);
-        return $alumno;
+        DB::table('alumnos')->where('id', $id)->update($validated);
+        return response()->json(['message' => 'Alumno updated'], 200);
     }
 
     public function destroy($id)
     {
-        Alumno::destroy($id);
-        return response()->json(['message' => 'Alumno deleted']);
+        DB::table('alumnos')->where('id', $id)->delete();
+        return response()->json(['message' => 'Alumno deleted'], 200);
     }
 }

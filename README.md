@@ -14,9 +14,6 @@ php artisan migrate
 php artisan make:seeder AlumnoSeeder
 php artisan db:seed --class=AlumnoSeeder
 
-## Crear un modelo Alumno
-php artisan make:model Alumno
-
 ## Crear un controller AlumnoController
 php artisan make:controller AlumnoController
 
@@ -25,5 +22,12 @@ Editar el archivo routes/api.php y definir las rutas.
 
 ## Crear un middleware para validar el ID
 php artisan make:middleware ValidateAlumnoId
+
+## Desactivar la verificación de CSRF para las rutas de la API
+Editar el archivo app/Http/Middleware/VerifyCsrfToken.php y agregar las rutas de la API a la propiedad $except.
+
+## Usar Query Builder en lugar de modelos
+Editar el archivo app/Http/Controllers/AlumnoController.php para usar el Query Builder.
+
 
 
